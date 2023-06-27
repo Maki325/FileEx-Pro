@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react';
-import { invoke } from '@tauri-apps/api/tauri';
-import byteSize from 'byte-size';
-import { Drive } from './types';
+'use client';
 
-function App() {
+import { useEffect, useState } from 'react';
+import { Drive } from '@/types/Drive';
+import { invoke } from '@tauri-apps/api/tauri';
+import Image from 'next/image';
+import byteSize from 'byte-size';
+import driveIcon from './drive.ico';
+
+export default function Home() {
   const [drives, setDrives] = useState<Drive[]>([]);
   const [selectedDrive, setSelectedDrive] = useState<string | null>(null);
 
@@ -34,7 +38,7 @@ function App() {
             key={drive.name}
             className="drive"
             onClick={() => setSelectedDrive(drive.name)}>
-            <img src="/drive.ico" alt="Drive" />
+            <Image src={driveIcon} alt="Drive" />
             <div>
               <h1 key={drive.name}>{drive.name}</h1>
               <h4>{getDriveUsage(drive)}</h4>
@@ -45,5 +49,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
